@@ -1,0 +1,81 @@
+[
+      {
+            "id": 19719,
+            "question": "What periodical literature does Delta Air Lines use as a moutpiece?",
+            "category": "literal",
+            "type": [
+                  "publication",
+                  "recurring",
+                  "intellectual work",
+                  "text",
+                  "communication medium",
+                  "serial"
+            ],
+            "rank": 0,
+            "rr": 0
+      },
+      {
+            "id": 15554,
+            "question": "Who is the child of Ranavalona I's husband?",
+            "category": "resource",
+            "type": [
+                  "publication",
+                  "recurring",
+                  "omnivore",
+                  "natural person"
+            ],
+            "rank": 2,
+            "rr": 0.5
+      },
+      {
+            "id": 974,
+            "question": "Is it true Jeff_Bridges occupation Lane Chandler and photographer ?",
+            "category": "boolean",
+            "type": [
+                  "boolean"
+            ],
+            "rank": 1,
+            "rr": 1.0
+      },
+      {
+            "id": 27610,
+            "question": "Which is the operating income for Qantas?",
+            "category": "literal",
+            "type": [
+                  "number"
+            ],
+            "rank": 1,
+            "rr": 1.0
+      },
+      {
+            "id": 24488,
+            "question": "which cola starts with the letter p",
+            "category": "resource",
+            "type": [
+                  "omnivore",
+                  "natural person"
+            ],
+            "rank": 0,
+            "rr": 0
+      },
+      {
+            "id": 27610,
+            "question": "Which is the operating income for Qantas?",
+            "category": "literal",
+            "type": [
+                  "string"
+            ],
+            "rank": 0,
+            "rr": 0
+      },
+      {
+            "id": 27610,
+            "question": "Which is the operating income for Qantas?",
+            "category": "resource",
+            "type": [
+                  "string"
+            ],
+            "rank": 0,
+            "rr": 0
+      }
+]
