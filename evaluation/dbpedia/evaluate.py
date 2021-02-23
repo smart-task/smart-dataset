@@ -78,6 +78,7 @@ def load_ground_truth(filename, type_hierarchy):
                     print('WARNING: unknown type "{}"'.format(type))
                     continue
                 types.append(type)
+
             ground_truth[question['id']] = {
                 'category': question['category'],
                 'type': types
@@ -236,30 +237,38 @@ def evaluate(system_output, ground_truth, type_hierarchy, max_depth):
 
         if predicted_category != gold['category']:
             accuracy.append(0)
-            continue
-
-        # Category has been correctly predicted -- proceed to type evaluation.
-        accuracy.append(1)
-
-        if gold['category'] == 'literal':
-            gains = [1 if gold['type'][0] == predicted_type[0] else 0]
+            gains = [0]
             ideal_gains = [1]
-        elif gold['category'] == 'resource':
-            if len(gold['type']) == 0:
-                print('WARNING: no gold types given for question ID {}'.format(
-                    question_id))
-                continue
-            # Filters gold types to most specific ones in the hierarchy.
-            gold_types = get_most_specific_types(gold['type'], type_hierarchy)
-
-            gains = compute_type_gains(predicted_type, gold_types,
-                                       type_hierarchy, max_depth)
-            ideal_gains = sorted(
-                compute_type_gains(
-                    get_expanded_types(gold_types, type_hierarchy), gold_types,
-                    type_hierarchy, max_depth), reverse=True)
         else:
-            continue
+            # Category has been correctly predicted -- proceed to type evaluation.
+            accuracy.append(1)
+
+            if gold['category'] == 'boolean' and predicted_category == 'boolean':
+                gains = [1]
+                ideal_gains = [1]
+            elif len(predicted_type) == 0:
+                gains = [0]
+                ideal_gains = [1]
+            elif gold['category'] == 'literal':
+                gains = [1 if gold['type'][0] == predicted_type[0] else 0]
+                ideal_gains = [1]
+            elif gold['category'] == 'resource':
+                if len(gold['type']) == 0:
+                    print('WARNING: no gold types given for question ID {}'.format(
+                        question_id))
+                    continue
+                # Filters gold types to most specific ones in the hierarchy.
+                gold_types = get_most_specific_types(gold['type'], type_hierarchy)
+
+                gains = compute_type_gains(predicted_type, gold_types,
+                                           type_hierarchy, max_depth)
+                ideal_gains = sorted(
+                    compute_type_gains(
+                        get_expanded_types(gold_types, type_hierarchy), gold_types,
+                        type_hierarchy, max_depth), reverse=True)
+
+            else:
+                raise Exception(f"Invalid category: {gold['category']}")
 
         ndcg_5.append(ndcg(gains, ideal_gains, k=5))
         ndcg_10.append(ndcg(gains, ideal_gains, k=10))
@@ -277,11 +286,11 @@ def evaluate(system_output, ground_truth, type_hierarchy, max_depth):
 
 def arg_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('type_hierarchy_tsv', type=str,
+    parser.add_argument('--type_hierarchy_tsv', type=str,
                         help='type hierarchy TSV file')
-    parser.add_argument('ground_truth_json', type=str,
+    parser.add_argument('--ground_truth_json', type=str,
                         help='ground truth JSON file')
-    parser.add_argument('system_output_json', type=str,
+    parser.add_argument('--system_output_json', type=str,
                         help='system output JSON file')
     args = parser.parse_args()
     return args
