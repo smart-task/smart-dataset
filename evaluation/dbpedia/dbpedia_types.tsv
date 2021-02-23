@@ -245,6 +245,7 @@ dbo:Mineral	2	dbo:ChemicalSubstance
 dbo:MusicalWork	2	dbo:Work
 dbo:SoccerClubSeason	3	dbo:SportsTeamSeason
 dbo:MeanOfTransportation	1	owl:Thing
+dbo:MedicalSpecialty	1	owl:Thing
 dbo:Annotation	3	dbo:WrittenWork
 dbo:UnitOfWork	1	owl:Thing
 dbo:Mosque	5	dbo:ReligiousBuilding
